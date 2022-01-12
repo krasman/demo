@@ -37,7 +37,10 @@ public class HumanController {
         model.addAttribute("humans", humans);
         return "showHuman";
     }*/
-
+    @GetMapping("/")
+    public String homePage(Model model){
+        return "redirect:/index";
+    }
     @GetMapping("/index")
     public String showUserList(Model model) {
         model.addAttribute("humans", humanRepository.findAll());
@@ -46,20 +49,16 @@ public class HumanController {
 
     @GetMapping("/signup")
     public String showSignUpForm(Human human) {
-        System.out.println("TRYTOADDD");
         return "add-human";
     }
 
     @PostMapping("/addhuman")
     public String addUser(@Valid Human human, BindingResult result, Model model) {
-        System.out.println("BRGINOFADDING");
         if (result.hasErrors()) {
-            System.out.println("ERROR????");
             return "add-human";
         }
 
         humanRepository.save(human);
-        System.out.println("SAVED??????");
         return "redirect:/index";
     }
 
